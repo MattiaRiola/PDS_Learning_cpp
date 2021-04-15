@@ -1,0 +1,6 @@
+.idea
+.vscode
+cmake-build-debug
+.vscode
+boost_1_75_0
+.DS_Store
