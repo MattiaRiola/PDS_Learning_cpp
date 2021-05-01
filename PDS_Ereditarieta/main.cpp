@@ -1,5 +1,6 @@
 #include <iostream>
 #include "casting.h"
+#include "crtp.hpp"
 
 class Base1{
 protected:
@@ -63,7 +64,7 @@ int main() {
 
     std::cout << "\n\n/!\\ WARNING: if I've one or more virtual methods, having a virtual destructor is a good practice to avoid issues /!\\ \n\n" << std::endl;
     playingWithCasts();
-
+    crtpExample();
     delete ptr;
     delete ptr3;
     return 0;

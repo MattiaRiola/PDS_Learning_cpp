@@ -1,4 +1,5 @@
 #include <iostream>
+
 template <typename T>
 const T& max(const T& t1, const T& t2);
 class Person{
@@ -47,7 +48,7 @@ int main() {
     Person p1 = Person("Eikichi","Onizuka",22);
     Person* p2 = new Person("Mew","Burzi",7);
     p1+=*p2;
-    std::cout << "Gesu age + Burzi age = " << p1.age << std::endl;
+    std::cout << "Eikichi age + Burzi age = " << p1.age << std::endl;
     delete p2;
     return 0;
 }
