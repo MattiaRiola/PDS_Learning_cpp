@@ -36,8 +36,7 @@ void playingWithCasts(){
     b2 = static_cast<CBase2 *>(d);
     std::cout << "b1 : " << b1 << std::endl;
     std::cout << "b2 : " << b2 << std::endl;
-    std::cout << "OSS:\n 1) b1 != b2\n 2) Il downcast doesn't work " <<std::endl;
-
+    std::cout << "OSS:\n 1) b1 != b2\n 2) The downcast doesn't work " <<std::endl;
     std::cout << "--- dynamic casting ---" << std::endl;
     std::cout << "in order to do the downcast I've to use dynamic cast"<< std::endl;
     b1 = dynamic_cast<CBase1 *>(d);

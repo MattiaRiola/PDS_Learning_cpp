@@ -46,7 +46,7 @@ public:
 };
 
 void crtpExample(){
-    std::cout << "d and c will be istantiate and the constructors will be called (C's constructor doesn't print on std::cout)" << std::endl;
+    std::cout << "d and c will be instantiate and the constructors will be called (C's constructor doesn't print on std::cout)" << std::endl;
     D d;
     C c;
     std::cout << "note: CRTPBase constructor is called because of the inheritance" << std::endl;
