@@ -2,10 +2,13 @@
 #include <thread>
 #include <mutex>
 #include <vector>
+#include "MyConcurrentClass.h"
+
 void interferenceExample();
 void solutionToInterfaceExample();
 void parametersIssues();
 int differentLocks();
+void concurrencyWithClasses();
 int main() {
     std::cout << "Hello, World!" << std::endl;
     std::cout << "#### example of interference ####" << std::endl;
@@ -22,8 +25,11 @@ int main() {
     std::cout << "results:\n";
     for(int r : res)
         std::cout << " res1: " << r << std::endl;
+
+    concurrencyWithClasses();
     return 0;
 }
+
 
 
 
@@ -122,11 +128,12 @@ int differentLocks(){
     std::mutex m3;
     bool finished = false;
     //summer will add valueToSum to num n times
-    auto summer = [&m1,&m2,&num,&valueToSum] (int n, int id) {
+    auto summer = [&m1,&m2,&num,&valueToSum] (int n) {
+        std::cout<< "[thread: " << std::this_thread::get_id() << "]\t start:\nn=" << n << std::endl;
         for(int j = 0; j<n;j++){
             std::this_thread::sleep_for(std::chrono::milliseconds(rand()%100));
             std::scoped_lock l(m1,m2);
-            std::cout << "[thread: t"<< id << "]\n\tsum: (num=) " << num << " + (valueToSum=) " << valueToSum << "\n";
+            std::cout << "[thread: "<< std::this_thread::get_id() << "]\n\tsum: (num=) " << num << " + (valueToSum=) " << valueToSum << "\n";
             num=num+valueToSum;
 
         }
@@ -151,8 +158,8 @@ int differentLocks(){
         }
         m3.unlock();
     };
-    std::thread t2(summer,6,2);
-    std::thread t1(summer,3,1);
+    std::thread t2(summer,6);
+    std::thread t1(summer,3);
 
     std::thread p1(printerWithoutCV);
     t1.join();
@@ -167,4 +174,21 @@ int differentLocks(){
 
     std::cout << "final value: num = " << num << std::endl;
     return num;
+}
+
+void concurrencyWithClasses(){
+    MyConcurrentClass myObject = MyConcurrentClass();
+    std::string input = "";
+    std::cout << "enter s to end the program, m to mute and u to unmute" << std::endl;
+    while(input.compare("stop") != 0) {
+        std::getline(std::cin, input);
+        if(input.compare("m")==0) {
+            myObject.mute();
+        }
+        if(input.compare("u")==0) {
+            myObject.unmute();
+        }
+
+
+    }
 }
