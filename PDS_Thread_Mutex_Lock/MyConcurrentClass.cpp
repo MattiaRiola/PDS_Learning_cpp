@@ -9,30 +9,34 @@
 
 MyConcurrentClass::MyConcurrentClass(){
     stop = false;
+    loud = true;
     cnt=0;
     t = std::thread([this]() {
         while(!this->stop) {
             //TODO: do it with condition variable, to mute and unmute the class correctly
-            std::cout << "Hello world!" << std::endl;
+            if(loud)
+                std::cout << "Hello world!" << std::endl;
             this->cnt++;
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            std::this_thread::sleep_for(std::chrono::seconds(3));
         }
         return this->cnt;
     });
 }
 
 MyConcurrentClass::~MyConcurrentClass(){
+    std::cout << "destroying MyConcurrentClass, joining the thread" << std::endl;
+    this->stop = true;
     t.join();
     std::cout <<"The class said hello "<< this->cnt << " times\n";
 }
 
 void MyConcurrentClass::mute() {
-    stop=1;
+    loud=0;
     return;
 }
 
 void MyConcurrentClass::unmute() {
-    stop = 0;
+    loud = 1;
     std::cerr << "Unmute doesn't work, it needs a condition variable!" << std::endl;
     return;
 }

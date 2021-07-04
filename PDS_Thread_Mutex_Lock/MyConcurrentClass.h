@@ -11,6 +11,7 @@
 class MyConcurrentClass {
     std::thread t;
     bool stop;
+    bool loud;
     int cnt;
     public:
         MyConcurrentClass();

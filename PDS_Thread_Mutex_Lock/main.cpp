@@ -3,6 +3,7 @@
 #include <mutex>
 #include <vector>
 #include "MyConcurrentClass.h"
+#include "sharedUniqueLockExample.h"
 
 void interferenceExample();
 void solutionToInterfaceExample();
@@ -27,6 +28,7 @@ int main() {
         std::cout << " res1: " << r << std::endl;
 
     concurrencyWithClasses();
+    playWithSharedLocks();
     return 0;
 }
 
@@ -129,7 +131,7 @@ int differentLocks(){
     bool finished = false;
     //summer will add valueToSum to num n times
     auto summer = [&m1,&m2,&num,&valueToSum] (int n) {
-        std::cout<< "[thread: " << std::this_thread::get_id() << "]\t start:\nn=" << n << std::endl;
+        std::cout<< "[thread: " << std::this_thread::get_id() << "]\t start:\tn=" << n << std::endl;
         for(int j = 0; j<n;j++){
             std::this_thread::sleep_for(std::chrono::milliseconds(rand()%100));
             std::scoped_lock l(m1,m2);
@@ -180,7 +182,7 @@ void concurrencyWithClasses(){
     MyConcurrentClass myObject = MyConcurrentClass();
     std::string input = "";
     std::cout << "enter s to end the program, m to mute and u to unmute" << std::endl;
-    while(input.compare("stop") != 0) {
+    while(input.compare("s") != 0) {
         std::getline(std::cin, input);
         if(input.compare("m")==0) {
             myObject.mute();
@@ -191,4 +193,5 @@ void concurrencyWithClasses(){
 
 
     }
+    std::cout << "escaping the loop" << std::endl;
 }
